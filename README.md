@@ -29,7 +29,6 @@ This is a  full stack application desiged with some key functional areas:
 
 The `./backend` directory contains a completed Flask and SQLAlchemy server. You will work primarily in app.py to define your endpoints and can reference models.py for DB and SQLAlchemy setup. It uses a Postgress database
 
-Full Documentation on how to use the API can be found here  [API Documentation](https://documenter.getpostman.com/view/4874547/Szf6WoLP)
 ### Getting Started
 
 ### Installing Dependencies
@@ -125,6 +124,133 @@ There are currently no authentication methods for this API. This will come in th
 You can call these endpoints from your domain as CORS is enabled and you should not have issues getting responses.
 
 If there are issues, contact the details as seen at the Authors subheading.
+
+
+## END POINT USAGE
+
+Below is an example for your endpoint to get all categories.
+
+
+```
+GET '/api/categories'
+- Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
+- Request Arguments: None
+- Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
+{
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  },
+  "success": true,
+  "total_categories": 6
+}
+
+```
+
+```
+GET '/api/questions'
+- Fetches a dictionary of questions in which the keys are the ids and the value is the corresponding string of the category
+- Request Arguments: None
+- Returns: An object question, which is well paginated to aid easy navigation: category_string key:value pairs. 
+{
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  },
+  "current_category": {
+    "id": 1,
+    "type": "Science"
+  },
+  "next_page": "http://127.0.0.1:5000/api/questions?page=2",
+  "previous": null,
+  "questions": [
+    {
+      "answer": "Apollo 13",
+      "category": 5,
+      "difficulty": 4,
+      "id": 2,
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    },
+    {
+      "answer": "Tom Cruise",
+      "category": 5,
+      "difficulty": 4,
+      "id": 4,
+      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+    }
+}
+
+```
+
+
+```
+POST '/api/questions'
+- Adds a dictionary of questions in which the keys are the ids and the value is the corresponding string of the category
+
+- Request Arguments: 
+{
+    "question": "question here",
+    "answer": "answer here",
+    "difficulty": 1,
+    "category": 3
+}
+
+- Returns: A status message indicating if the request is successful or not. 
+{
+  "created": 28,
+  "message": "Question created",
+  "success": true
+}
+
+```
+
+```
+DEL '/api/questions/<question-id>'
+- Deletes a dictionary of question with a specific id
+- Request Arguments
+{
+  "search_term": "movie"
+}
+
+- Returns: A collection of result objects based on the searched term.
+{
+  "questions": [
+    {
+      "answer": "Apollo 13",
+      "category": 5,
+      "difficulty": 4,
+      "id": 2,
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    }
+  ],
+  "success": true,
+  "total_questions": 1
+}
+
+```
+
+```
+DEL '/api/questions/<question-id>'
+- Deletes a dictionary of question with a specific id
+- Request Arguments: None
+
+- Returns: A status message indicating if the request is successful or not. 
+{
+  "message": "Deleted",
+  "success": true
+}
+
+```
+Full Documentation on how to use the API can be found here  [API Documentation](https://documenter.getpostman.com/view/4874547/Szf6WoLP)
+
 
 # Error Codes
 Flaskr Backend API uses standard error codes. Some of which are listed below with their meaning.
